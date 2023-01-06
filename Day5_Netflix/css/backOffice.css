@@ -1,0 +1,20 @@
+body > div.container-fluid,
+body > div.container {
+  position: absolute;
+  bottom: 0px;
+  text-align: center;
+}
+
+#logoNetflix {
+  width: 200px;
+  height: 100px;
+}
+
+html,
+body {
+  background-color: black;
+}
+
+body > div.container {
+  margin-bottom: 0;
+}
