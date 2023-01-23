@@ -160,8 +160,8 @@
                     them in a cool way!
                 </p>
                 <p>
-                    <a href="#" class="btn btn-primary my-2">Load Images</a>
-                    <a href="#" class="btn btn-secondary my-2">Load Secondary Images</a>
+                    <a href="#" onclick="loadCards1()" class="btn btn-primary my-2">Load Images</a>
+                    <a href="#" onclick="loadCards2()" class="btn btn-secondary my-2">Load Secondary Images</a>
                 </p>
             </div>
         </section>
@@ -203,7 +203,7 @@
                     Authorization: 'Bearer 563492ad6f9170000100000111268eb050a147cb9130e240e69682e6'
                 }
             };
-            fetch('https://api.pexels.com/v1/search?query=south-africa', options)
+            fetch(`https://api.pexels.com/v1/search?query=south-africa`, options)
                 .then(response => response.json())
                 .then(cardList => {
 
@@ -217,11 +217,11 @@
 
                         column.innerHTML = `
                         <div class="card mb-3">
-                            <img src=${card.src.large} class="card-img-top" alt=''>
+                            <img src=${photos.src.large} class="card-img-top" alt=''>
                             <div class="card-body ">
-                                <h5 class="card-title text-truncate m2">${card.photographer}</h5>
-                                <p class="card=text text-truncate m2">${card.alt}</p>
-                                
+                                <h5 class="card-title text-truncate m2">${photos.photographer}</h5>
+                                <p class="card=text text-truncate m2">${photos.alt}</p>
+                                <button class="hideButton" onclick="hideCard()">Hide</button>
                                 </div>
                                 </div>
                                 
@@ -234,6 +234,47 @@
 
         }
 
+        const loadCards2 = () => {
+            const options = {
+                method: 'GET',
+                headers: {
+                    Authorization: 'Bearer 563492ad6f9170000100000111268eb050a147cb9130e240e69682e6'
+                }
+            };
+            fetch(`https://api.pexels.com/v1/search?query=south-america`, options)
+                .then(response => response.json())
+                .then(cardList => {
+
+                    const containerRow = document.querySelector("body > main > div > div > div")
+
+                    for (let i = 0; i < cardList.photos.length; i++) {
+                        const photos = cardList.photos[i]
+
+                        const column = document.createElement('div')
+                        column.className = "col-3"
+
+                        column.innerHTML = `
+                        <div class="card mb-3">
+                            <img src=${photos.src.large} class="card-img-top" alt=''>
+                            <div class="card-body ">
+                                <h5 class="card-title text-truncate m2">${photos.photographer}</h5>
+                                <p class="card=text text-truncate m2">${photos.alt}</p>
+                                <button class="hideButton" onclick="hideCard(this.parentNode.parentNode)">Hide</button>
+                                </div>
+                                </div>
+                                
+                            `
+                        containerRow.appendChild(column)
+                    }
+
+                })
+                .catch(err => console.error("Network Error", err))
+
+        }
+
+        function hideCard(card) {
+            card.style.display = 'none';
+        }
 
 
 

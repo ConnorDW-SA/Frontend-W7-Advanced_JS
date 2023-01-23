@@ -35,7 +35,8 @@
     <div class="container-fluid m-0 p-0 no-gutters bg-light">
         <div class=" mx-auto col-12 my-5 d-flex-col">
             <h1 class="display-5 text-center text-dark">Albums</h1>
-            <button class="mx-5 " onclick="uniqueAlbums()">Number of Unique Albums: </button>
+            <button class="mx-5 " onclick="countUniqueAlbums()">Number of Unique Albums: </button>
+            <button class="buttonTwo" onclick="songListCount()">Number of Songs: </button>
 
         </div>
         <div class="container fluid">
@@ -80,8 +81,37 @@
                 }
 
 
+                countUniqueAlbums = () => {
+                    const albums = document.querySelectorAll('.card-title')
+                    const uniqueAlbums = {}
+                    albums.forEach(album => {
+                        if (!uniqueAlbums[album.innerText]) {
+                            uniqueAlbums[album.innerText] = 1;
+                        } else {
+                            uniqueAlbums[album.innerText]++;
+                        }
+                    })
+                    console.log(uniqueAlbums)
+                    const button = document.querySelector('button')
+                    button.innerText += Object.keys(uniqueAlbums).length
+                    button.disabled = true
+                }
 
-
+                songListCount = () => {
+                    const songs = document.querySelectorAll('.card-text')
+                    const songList = {}
+                    songs.forEach(song => {
+                        if (!songList[song.innerText]) {
+                            songList[song.innerText] = 1;
+                        } else {
+                            songList[song.innerText]++;
+                        }
+                    })
+                    console.log(songList)
+                    const button = document.querySelector('.buttonTwo')
+                    button.innerText += Object.keys(songList).length
+                    button.disabled = true
+                }
 
 
 
