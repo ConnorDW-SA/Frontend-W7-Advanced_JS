@@ -45,6 +45,11 @@
 
             <script>
 
+                window.onload = async () => {
+                    loadAlbums('https://deezerdevs-deezer.p.rapidapi.com/search?q=metallica', options),
+                        loadAlbums('https://deezerdevs-deezer.p.rapidapi.com/search?q=daft%20punk', options),
+                        loadAlbums('https://deezerdevs-deezer.p.rapidapi.com/search?q=pink%20floyd', options)
+                }
                 const options = {
                     method: 'GET',
                     headers: {
@@ -115,11 +120,6 @@
 
 
 
-                window.onload = async () => {
-                    loadAlbums('https://deezerdevs-deezer.p.rapidapi.com/search?q=metallica', options),
-                        loadAlbums('https://deezerdevs-deezer.p.rapidapi.com/search?q=daft%20punk', options),
-                        loadAlbums('https://deezerdevs-deezer.p.rapidapi.com/search?q=pink%20floyd', options)
-                }
 
 
 
