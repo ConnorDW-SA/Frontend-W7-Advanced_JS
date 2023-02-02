@@ -3,19 +3,7 @@
 
 <head>
     <!--
-        PICTURE ALBUM EXERCISE
-
-        Starting from the current bootstrap layout, implement as many of the following features as you can:
-
-        First of all: 
-        Register on pexels to retrieve your API key: https://www.pexels.com/api/new/
-
-        the key, once acquired, needs to go into the headers of your HTTP request with a property of 
-        
-        {Authorization: "Bearer [YOUR API KEY]"}
-        
-        this should be enough for you to make your GET request successfully
-
+      
 
         1) When pressing on Load Images button, load the pictures from https://api.pexels.com/v1/search?query=[your-query]
         2) When pressing on Load Seconday Images, load the pictures from https://api.pexels.com/v1/search?query=[your-secondary-query]
@@ -109,11 +97,49 @@
                 font-size: 3.5rem;
             }
         }
+
+        .carousel-indicators li {
+            background-color: #007bff;
+        }
+
+        .carousel-indicators .active {
+            background-color: #0056b3;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            height: 50px;
+            width: 50px;
+            background-color: #007bff;
+            border-radius: 50%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            width: 80%;
+            height: auto;
+            max-height: 80%;
+            max-width: 80%;
+        }
     </style>
 </head>
 
 <body>
     <header>
+
         <div class="collapse bg-dark" id="navbarHeader">
             <div class="container">
                 <div class="row">
@@ -160,8 +186,12 @@
                     them in a cool way!
                 </p>
                 <p>
-                    <a href="#" onclick="loadCards1()" class="btn btn-primary my-2">Load Images</a>
-                    <a href="#" onclick="loadCards2()" class="btn btn-secondary my-2">Load Secondary Images</a>
+                    <a href="#" onclick="loadCards(searchQuery1)" class="btn btn-primary my-2">Load Images</a>
+                    <a href="#" onclick="loadCards(searchQuery2)" class="btn btn-secondary my-2">Load Secondary
+                        Images</a>
+                    <input type="text" class="searchBar" placeholder="Search Query" />
+                    <button class="searchButton">Search</button>
+
                 </p>
             </div>
         </section>
@@ -172,6 +202,25 @@
 
                 </div>
             </div>
+        </div>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <!-- Indicators will be generated dynamically here -->
+            </ol>
+            <div class="carousel-inner">
+                <!-- Slides will be generated dynamically here -->
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="modal">
+            <img class="modal-content" id="img-modal" src="" alt="">
         </div>
     </main>
 
@@ -188,6 +237,7 @@
     </footer>
 
 
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -196,81 +246,24 @@
         crossorigin="anonymous"></script>
     <script>
 
-        const loadCards1 = () => {
-            const options = {
-                method: 'GET',
-                headers: {
-                    Authorization: 'Bearer 563492ad6f9170000100000111268eb050a147cb9130e240e69682e6'
-                }
-            };
-            fetch(`https://api.pexels.com/v1/search?query=south-africa`, options)
-                .then(response => response.json())
-                .then(cardList => {
+        const searchQuery1 = "South Africa"
+        const searchQuery2 = "Capybara"
+        const options = {
+            method: 'GET',
+            headers: {
+                Authorization: 'Bearer 563492ad6f9170000100000111268eb050a147cb9130e240e69682e6'
+            }
+        };
 
-                    const containerRow = document.querySelector("body > main > div > div > div")
-
-                    for (let i = 0; i < cardList.photos.length; i++) {
-                        const photos = cardList.photos[i]
-
-                        const column = document.createElement('div')
-                        column.className = "col-3"
-
-                        column.innerHTML = `
-                        <div class="card mb-3">
-                            <img src=${photos.src.large} class="card-img-top" alt=''>
-                            <div class="card-body ">
-                                <h5 class="card-title text-truncate m2">${photos.photographer}</h5>
-                                <p class="card=text text-truncate m2">${photos.alt}</p>
-                                <button class="hideButton" onclick="hideCard()">Hide</button>
-                                </div>
-                                </div>
-                                
-                            `
-                        containerRow.appendChild(column)
-                    }
-
-                })
-                .catch(err => console.error("Network Error", err))
-
-        }
-
-        const loadCards2 = () => {
-            const options = {
-                method: 'GET',
-                headers: {
-                    Authorization: 'Bearer 563492ad6f9170000100000111268eb050a147cb9130e240e69682e6'
-                }
-            };
-            fetch(`https://api.pexels.com/v1/search?query=south-america`, options)
-                .then(response => response.json())
-                .then(cardList => {
-
-                    const containerRow = document.querySelector("body > main > div > div > div")
-
-                    for (let i = 0; i < cardList.photos.length; i++) {
-                        const photos = cardList.photos[i]
-
-                        const column = document.createElement('div')
-                        column.className = "col-3"
-
-                        column.innerHTML = `
-                        <div class="card mb-3">
-                            <img src=${photos.src.large} class="card-img-top" alt=''>
-                            <div class="card-body ">
-                                <h5 class="card-title text-truncate m2">${photos.photographer}</h5>
-                                <p class="card=text text-truncate m2">${photos.alt}</p>
-                                <button class="hideButton" onclick="hideCard(this.parentNode.parentNode)">Hide</button>
-                                </div>
-                                </div>
-                                
-                            `
-                        containerRow.appendChild(column)
-                    }
-
-                })
-                .catch(err => console.error("Network Error", err))
-
-        }
+        const searchImages = () => {
+            const searchBar = document.querySelector(".searchBar");
+            const searchButton = document.querySelector(".searchButton");
+            searchButton.addEventListener("click", () => {
+                const searchQuery = searchBar.value;
+                loadCards(searchQuery);
+            });
+        };
+        searchImages();
 
         function hideCard(card) {
             card.style.display = 'none';
@@ -278,7 +271,94 @@
 
 
 
+        const loadForest = (searchQuery = "forest") => {
+            fetch(`https://api.pexels.com/v1/search?query=${searchQuery}`, options)
+                .then((response) => response.json())
+                .then((cardList) => {
+                    const carouselInner = document.querySelector(".carousel-inner");
+                    const carouselIndicators = document.querySelector(".carousel-indicators");
+
+                    for (let i = 0; i < cardList.photos.length; i++) {
+                        const photos = cardList.photos[i];
+
+                        const carouselItem = document.createElement("div");
+                        carouselItem.className = `carousel-item ${i === 0 ? "active" : ""}`;
+                        carouselItem.innerHTML = `
+          <img src=${photos.src.large} class="d-block w-100" alt='' style="height:40vh;object-fit:cover">
+        `;
+                        carouselInner.appendChild(carouselItem);
+
+                        const carouselIndicator = document.createElement("li");
+                        carouselIndicator.setAttribute("data-target", "#carouselExampleIndicators");
+                        carouselIndicator.setAttribute("data-slide-to", i);
+                        carouselIndicator.className = `${i === 0 ? "active" : ""}`;
+                        carouselIndicators.appendChild(carouselIndicator);
+                    }
+                })
+                .catch((err) => console.error("Network Error", err));
+        };
+        loadForest()
+
+
+
+        const loadCards = (searchQuery) => {
+            fetch(`https://api.pexels.com/v1/search?query=${searchQuery}`, options)
+                .then(response => response.json())
+                .then(cardList => {
+                    console.log(cardList)
+                    const containerRow = document.querySelector("body > main > div > div > div");
+
+                    for (let i = 0; i < cardList.photos.length; i++) {
+                        const photos = cardList.photos[i];
+
+                        const column = document.createElement('div');
+                        column.className = "col-3";
+
+                        column.innerHTML = `
+        <div class="card mb-3">
+          <img src=${photos.src.large} class="card-img-top" alt='' style="height:20vh">
+          <div class="card-body ">
+            <h5 class="card-title text-truncate m2">${photos.photographer}</h5>
+            <p class="card=text text-truncate m2">${photos.alt}</p>
+            <button class="hideButton" onclick="hideCard(this.parentNode.parentNode)">Hide</button>
+            <button class="view-button" onclick="modalShow(this)" data-img-src="${photos.src.large}">View</button>
+            <p>${photos.id}</p>
+          </div>
+        </div>`;
+                        containerRow.appendChild(column);
+                    }
+
+                    alert(`${cardList.photos.length} images loading...`);
+                })
+                .catch(err => console.error("Network Error", err));
+        };
+
+        const modal = document.querySelector(".modal");
+        const modalImg = document.querySelector("#img-modal");
+
+        const modalShow = (button) => {
+            modalImg.src = button.dataset.imgSrc;
+            modal.style.display = "block";
+        }
+
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
+
+
+
+
+
+
+
     </script>
+
+
 </body>
 
 </html>
