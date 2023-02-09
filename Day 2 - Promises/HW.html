@@ -133,6 +133,7 @@
             height: auto;
             max-height: 80%;
             max-width: 80%;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -307,6 +308,7 @@
                 .then(cardList => {
                     console.log(cardList)
                     const containerRow = document.querySelector("body > main > div > div > div");
+                    containerRow.innerHTML = ''
 
                     for (let i = 0; i < cardList.photos.length; i++) {
                         const photos = cardList.photos[i];
