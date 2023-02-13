@@ -2,7 +2,7 @@ const options = {
   method: "GET",
   headers: {
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzZjZjA3ZWQ0YmUzZDAwMTU4NDVmZDciLCJpYXQiOjE2NjgxNjQ2ODAsImV4cCI6MTY2OTM3NDI4MH0.PJrHp_ME0y-gY2qVFhYjuFXEY6XrpjlrcjVQm07mnyo"
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzJhZDVlNDUwY2JlNjAwMTU1ZTE2ZjYiLCJpYXQiOjE2NzYyNzc4MTMsImV4cCI6MTY3NzQ4NzQxM30.IDC4zX667jBnuQaeKb2l3bfZNdZY01wkbuhr7kP-PJc"
   }
 };
 
